@@ -1,19 +1,24 @@
 import { Request, Response } from "express";
 import { ApiService } from "../data/apiService";
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 export class ProxyController {
-    private apiService: ApiService;
+    static async mapsProxyHandler(req: Request, res: Response): Promise<void> {
+        const mapsApiKey: string | undefined = process.env.maps_api_key;
 
-    constructor(mapsApiKey: string) {
-        this.apiService = new ApiService(mapsApiKey);
-    }
-
-    async proxyHandler(reg: Request, res: Response): Promise<void> {
+        if (!mapsApiKey) {
+            res.status(500).json({ error: 'Internal server error' });
+            return;
+        }
         try {
-            const data = await this.apiService.fetchData();
-            res.json(data);
+            const scriptContent = await ApiService.fetchMapScript(mapsApiKey);
+            res.send(scriptContent);
+            console.log(mapsApiKey)
         } catch (error) {
-            res.status(500).json({ error: 'Internal server error' })
+            console.error('Error fetching Google Maps API script', error);
+            res.status(500).send('Error fetching Google Maps API script');
         }
     }
 }

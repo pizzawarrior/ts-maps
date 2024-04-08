@@ -1,23 +1,16 @@
 import express from 'express';
-import dotenv from 'dotenv';
-import { ProxyController } from './controllers/proxyController';
-
-dotenv.config();
+import path from 'path';
+// import { excludeFileMiddleware } from './middleware/excludeFileMiddleware';
 
 const app = express();
 const PORT = 3000;
 
-const mapsApiKey = process.env.maps_api_key;
+// Use the custom middleware to exclude specific files
+// app.use(excludeFileMiddleware);
 
-if (!mapsApiKey) {
-    console.error('maps_api_key is not defined in envirnoment');
-    process.exit(1);
-}
-
-const proxyController = new ProxyController(mapsApiKey);
-
-app.get('/api/proxy', (req, res) => proxyController.proxyHandler(req, res));
+// Serve static files from the 'public' directory
+app.use(express.static(path.join(__dirname)));
 
 app.listen(PORT, () => {
-    console.log(`Server is running on http:localhost:${PORT}`)
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
