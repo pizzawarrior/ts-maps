@@ -15,7 +15,6 @@ export class ProxyController {
         try {
             const scriptContent = await ApiService.fetchMapScript(mapsApiKey);
             res.send(scriptContent);
-            console.log(mapsApiKey)
         } catch (error) {
             console.error('Error fetching Google Maps API script', error);
             res.status(500).send('Error fetching Google Maps API script');
