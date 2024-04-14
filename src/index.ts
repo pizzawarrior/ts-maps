@@ -18,9 +18,9 @@ async function initMap(): Promise<void> {
         const scriptContent = await response.text();
         eval(scriptContent);
 
-        const position = { lat: 0, lng: 0 };
-
-        new CustomMap('map')
+        const customMap = new CustomMap('map', 0, 0)
+        customMap.addMarker(user);
+        customMap.addMarker(company);
 
     } catch (error) {
         console.error('Failed to initialize google map', error)

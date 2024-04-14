@@ -4,7 +4,7 @@ export class User {
     name: string;
     location: {
         lat: number;
-        lon: number;
+        lng: number;
     };
     constructor() {
         this.name = faker.name.firstName();
@@ -13,7 +13,7 @@ export class User {
             // the docs show the type for latitude and longitude being strings
             // this is why we are converting them to decimals here using parseFloat
             lat: parseFloat(faker.address.latitude()),
-            lon: parseFloat(faker.address.longitude())
+            lng: parseFloat(faker.address.longitude())
         }
     }
 }
