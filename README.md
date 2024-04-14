@@ -1,7 +1,7 @@
 To run this app in the browser:
 `npx parcel public/index.html`
 
-To run the server:
+To run the backend server:
 `npm start`
 
 This project uses the faker.js library to create dummy data to work with.
