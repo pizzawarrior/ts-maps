@@ -6,6 +6,8 @@ interface Mappable {
     }
 };
 
+interface Clickable {}
+
 export class CustomMap {
     // we put the private modifier on the property 'googleMap' so that
     // other devs can't reference this property outside of this class: We are limiting the
@@ -22,13 +24,20 @@ export class CustomMap {
         });
     }
         addMarker(mappable: Mappable): void {
-            new google.maps.Marker({
+            const marker = new google.maps.Marker({
                 map: this.googleMap,
                 position: {
                     lat: mappable.location.lat,
                     lng: mappable.location.lng
-
                 }
             });
+
+            marker.addListener('click', () => {
+                const infoWindow = new google.maps.InfoWindow({
+                    content: 'Ahoy maytee'
+                });
+
+                infoWindow.open(this.googleMap, marker)
+            })
         }
 }
