@@ -1,12 +1,11 @@
 // instructions to every other class on how they can be an arument to addMarker
-interface Mappable {
+export interface Mappable {
     location: {
         lat: number,
         lng: number
-    }
+    };
+    markerContent(): string;
 };
-
-interface Clickable {}
 
 export class CustomMap {
     // we put the private modifier on the property 'googleMap' so that
@@ -34,7 +33,7 @@ export class CustomMap {
 
             marker.addListener('click', () => {
                 const infoWindow = new google.maps.InfoWindow({
-                    content: 'Ahoy maytee'
+                    content: mappable.markerContent()
                 });
 
                 infoWindow.open(this.googleMap, marker)
